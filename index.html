@@ -58,7 +58,6 @@
       border: 1px solid #1e1e2e;
       border-radius: 16px;
       padding: 28px;
-      cursor: pointer;
       transition: all 0.25s ease;
       position: relative;
       overflow: hidden;
@@ -121,23 +120,9 @@
       line-height: 1.5;
     }
 
-    .expand-icon {
-      color: #555;
-      font-size: 0.8rem;
-      transition: transform 0.25s;
-    }
 
-    .card.open .expand-icon { transform: rotate(180deg); }
 
-    .card-details {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease;
-    }
 
-    .card.open .card-details {
-      max-height: 1200px;
-    }
 
     .card-details-inner {
       padding-top: 20px;
@@ -200,13 +185,13 @@
   <div class="container">
     <header>
       <h1>🧟 S.T.A.R.S. Agent Team</h1>
-      <p>OpenClaw's multi-agent engineering team. Click any agent to see their full responsibilities.</p>
+      <p>OpenClaw's multi-agent engineering team. Meet the agents and their roles.</p>
     </header>
 
     <div class="grid">
 
       <!-- Leon -->
-      <div class="card leon" onclick="this.classList.toggle('open')">
+      <div class="card leon">
         <div class="card-header">
           <div>
             <h2>Leon Kennedy</h2>
@@ -215,7 +200,6 @@
           </div>
           <div style="text-align:right">
             <span class="badge">Architect</span>
-            <div class="expand-icon" style="margin-top:8px">▼</div>
           </div>
         </div>
         <div class="card-summary">
@@ -268,7 +252,7 @@
       </div>
 
       <!-- Jill -->
-      <div class="card jill" onclick="this.classList.toggle('open')">
+      <div class="card jill">
         <div class="card-header">
           <div>
             <h2>Jill Valentine</h2>
@@ -277,7 +261,6 @@
           </div>
           <div style="text-align:right">
             <span class="badge">Senior</span>
-            <div class="expand-icon" style="margin-top:8px">▼</div>
           </div>
         </div>
         <div class="card-summary">
@@ -325,7 +308,7 @@
       </div>
 
       <!-- Chris -->
-      <div class="card chris" onclick="this.classList.toggle('open')">
+      <div class="card chris">
         <div class="card-header">
           <div>
             <h2>Chris Redfield</h2>
@@ -334,7 +317,6 @@
           </div>
           <div style="text-align:right">
             <span class="badge">Mid-Level</span>
-            <div class="expand-icon" style="margin-top:8px">▼</div>
           </div>
         </div>
         <div class="card-summary">
@@ -382,7 +364,7 @@
       </div>
 
       <!-- Barry -->
-      <div class="card barry" onclick="this.classList.toggle('open')">
+      <div class="card barry">
         <div class="card-header">
           <div>
             <h2>Barry Burton</h2>
@@ -391,7 +373,6 @@
           </div>
           <div style="text-align:right">
             <span class="badge">Junior</span>
-            <div class="expand-icon" style="margin-top:8px">▼</div>
           </div>
         </div>
         <div class="card-summary">
