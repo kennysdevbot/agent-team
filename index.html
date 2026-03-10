@@ -143,22 +143,34 @@
     }
 
     .agent-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #fff;
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
       flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
     }
 
-    .card.leon .agent-avatar { background: linear-gradient(135deg, var(--leon), #be123c); }
-    .card.jill .agent-avatar { background: linear-gradient(135deg, var(--jill), #4338ca); }
-    .card.chris .agent-avatar { background: linear-gradient(135deg, var(--chris), #059669); }
-    .card.barry .agent-avatar { background: linear-gradient(135deg, var(--barry), #d97706); }
+    .agent-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .agent-avatar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+      pointer-events: none;
+    }
+
+    .card.leon .agent-avatar { box-shadow: 0 0 0 2px var(--leon); }
+    .card.jill .agent-avatar { box-shadow: 0 0 0 2px var(--jill); }
+    .card.chris .agent-avatar { box-shadow: 0 0 0 2px var(--chris); }
+    .card.barry .agent-avatar { box-shadow: 0 0 0 2px var(--barry); }
 
     .tier-badge {
       font-size: 0.65rem;
@@ -344,6 +356,14 @@
       flex-shrink: 0;
     }
 
+    .hierarchy-node .h-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
     .hierarchy-node .h-name {
       font-size: 0.82rem;
       font-weight: 500;
@@ -419,7 +439,7 @@
       <div class="card leon">
         <div class="card-top">
           <div class="card-top-row">
-            <div class="agent-avatar">LK</div>
+            <div class="agent-avatar"><img src="assets/leon.png" alt="Leon Kennedy"></div>
             <span class="tier-badge">Architect</span>
           </div>
           <div class="card-name">Leon Kennedy</div>
@@ -488,7 +508,7 @@
       <div class="card jill">
         <div class="card-top">
           <div class="card-top-row">
-            <div class="agent-avatar">JV</div>
+            <div class="agent-avatar"><img src="assets/jill.png" alt="Jill Valentine"></div>
             <span class="tier-badge">Senior</span>
           </div>
           <div class="card-name">Jill Valentine</div>
@@ -552,7 +572,7 @@
       <div class="card chris">
         <div class="card-top">
           <div class="card-top-row">
-            <div class="agent-avatar">CR</div>
+            <div class="agent-avatar"><img src="assets/chris.png" alt="Chris Redfield"></div>
             <span class="tier-badge">Mid-Level</span>
           </div>
           <div class="card-name">Chris Redfield</div>
@@ -616,7 +636,7 @@
       <div class="card barry">
         <div class="card-top">
           <div class="card-top-row">
-            <div class="agent-avatar">BB</div>
+            <div class="agent-avatar"><img src="assets/barry.png" alt="Barry Burton"></div>
             <span class="tier-badge">Junior</span>
           </div>
           <div class="card-name">Barry Burton</div>
@@ -684,7 +704,7 @@
       <h2>Escalation Flow</h2>
       <div class="hierarchy-flow">
         <div class="hierarchy-node">
-          <span class="h-dot" style="background:var(--barry)"></span>
+          <img class="h-avatar" src="assets/barry.png" alt="Barry">
           <div>
             <div class="h-name">Barry</div>
             <div class="h-tier">Junior</div>
@@ -694,7 +714,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </div>
         <div class="hierarchy-node">
-          <span class="h-dot" style="background:var(--chris)"></span>
+          <img class="h-avatar" src="assets/chris.png" alt="Chris">
           <div>
             <div class="h-name">Chris</div>
             <div class="h-tier">Mid-Level</div>
@@ -704,7 +724,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </div>
         <div class="hierarchy-node">
-          <span class="h-dot" style="background:var(--jill)"></span>
+          <img class="h-avatar" src="assets/jill.png" alt="Jill">
           <div>
             <div class="h-name">Jill</div>
             <div class="h-tier">Senior</div>
@@ -714,7 +734,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </div>
         <div class="hierarchy-node">
-          <span class="h-dot" style="background:var(--leon)"></span>
+          <img class="h-avatar" src="assets/leon.png" alt="Leon">
           <div>
             <div class="h-name">Leon</div>
             <div class="h-tier">Architect</div>
