@@ -18,8 +18,8 @@ This repository showcases a structured approach to multi-agent development using
 |-------|------|-------|-----------|
 | **Leon Kennedy** | Principal Architect | Claude Opus 4.6 | Architecture, planning, system design |
 | **Jill Valentine** | Senior Engineer | Claude Sonnet 4.5 | Feature development, full-stack implementation |
-| **Chris Redfield** | DevOps Engineer | Claude Sonnet 4 | Infrastructure, deployment, automation |
-| **Barry Burton** | Support Engineer | GPT-4o-mini | Quick fixes, scripts, documentation |
+| **Chris Redfield** | DevOps Engineer | Claude Haiku 4.5 | Infrastructure, deployment, automation |
+| **Barry Burton** | Support Engineer | Gemini 2.5 Flash | Quick fixes, scripts, documentation |
 
 ## 🏗️ Architecture
 
@@ -228,8 +228,8 @@ The hierarchical model reduces costs by:
 
 - Using Claude Opus 4.6 (most expensive) only for architecture
 - Using Claude Sonnet 4.5 for complex implementation
-- Using Claude Sonnet 4 for infrastructure tasks
-- Using GPT-4o-mini for routine work
+- Using Claude Haiku 4.5 for infrastructure tasks
+- Using Gemini 2.5 Flash for routine work
 
 **Estimated savings:** 60-70% compared to using top-tier models for all tasks.
 
