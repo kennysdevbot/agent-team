@@ -420,6 +420,207 @@
     }
 
     .footer-links a:hover { color: var(--text-secondary); }
+
+    /* ── Modal Overlay ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* ── Modal Content ── */
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      max-width: 680px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      transform: scale(0.95) translateY(20px);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-overlay.active .modal {
+      transform: scale(1) translateY(0);
+    }
+
+    /* ── Modal Header ── */
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 32px 32px 24px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: var(--surface);
+      z-index: 10;
+    }
+
+    .modal-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .modal-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .modal-avatar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+      pointer-events: none;
+    }
+
+    .modal.leon .modal-avatar { box-shadow: 0 0 0 2px var(--leon); }
+    .modal.jill .modal-avatar { box-shadow: 0 0 0 2px var(--jill); }
+    .modal.chris .modal-avatar { box-shadow: 0 0 0 2px var(--chris); }
+    .modal.barry .modal-avatar { box-shadow: 0 0 0 2px var(--barry); }
+
+    .modal-header-info {
+      flex: 1;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .modal-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .modal-close:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: var(--border-hover);
+    }
+
+    .modal-close svg {
+      width: 20px;
+      height: 20px;
+      color: var(--text-muted);
+    }
+
+    /* ── Modal Body ── */
+    .modal-body {
+      padding: 32px;
+    }
+
+    .modal-body h1 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .modal-body h2 {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 28px;
+      margin-bottom: 12px;
+    }
+
+    .modal-body p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .modal-body ul {
+      list-style: none;
+      margin-bottom: 16px;
+    }
+
+    .modal-body li {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      padding-left: 20px;
+      position: relative;
+      margin-bottom: 8px;
+    }
+
+    .modal-body li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--text-dim);
+    }
+
+    .modal-body strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .modal-body code {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.85em;
+      background: rgba(255,255,255,0.05);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text);
+    }
+
+    @media (max-width: 640px) {
+      .modal {
+        max-height: 90vh;
+      }
+      .modal-header {
+        padding: 24px 20px 20px;
+      }
+      .modal-body {
+        padding: 24px 20px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -751,10 +952,288 @@
     </footer>
   </div>
 
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <div class="modal-avatar" id="modalAvatar">
+          <img id="modalAvatarImg" src="" alt="">
+        </div>
+        <div class="modal-header-info">
+          <div class="modal-title" id="modalTitle"></div>
+          <div class="modal-subtitle" id="modalSubtitle"></div>
+        </div>
+        <div class="modal-close" onclick="closeModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 6 6 18M6 6l12 12"/>
+          </svg>
+        </div>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
   <script>
-    // Accordion — close others when one opens
+    // Agent SOUL data
+    const agentSouls = {
+      leon: {
+        name: "Leon Kennedy",
+        role: "Principal Architect",
+        avatar: "assets/leon.png",
+        content: `
+# Leon Kennedy - Principal Architect
+
+## Core Identity
+I'm Leon Kennedy, Principal Architect. I design systems before anyone writes code.
+
+## Responsibilities
+- Go first on every new repo or project
+- Create architectural foundation before implementation
+- Choose stack, folder structure, conventions, and patterns
+- Break work into tasks for Jill, Chris, or Barry
+- Maintain and update repo documentation
+
+## What I Create on New Projects
+- README.md
+- docs/architecture/product-brief.md
+- docs/architecture/tech-stack.md
+- docs/architecture/system-design.md
+- docs/architecture/frontend-patterns.md
+- docs/architecture/backend-patterns.md
+- docs/architecture/task-routing.md
+- docs/architecture/anti-patterns.md
+
+## Task Types
+- New project creation & tech stack selection
+- Architecture and system design
+- Major refactors & shared state strategy
+- API/service boundaries & database/schema planning
+- Design docs and RFC-style planning
+- Large cross-file debugging
+
+## Rules I Follow
+- **No implementation until architecture/docs are in place**
+- Optimize for maintainability, scalability, and AI-assisted dev
+- Prefer simple, explicit patterns over cleverness
+- Avoid unnecessary abstractions
+
+## Model
+claude-opus-4-6
+        `
+      },
+      jill: {
+        name: "Jill Valentine",
+        role: "Senior Engineer",
+        avatar: "assets/jill.png",
+        content: `
+# Jill Valentine - Senior Engineer
+
+## Core Identity
+I'm Jill Valentine, Senior Engineer. I handle complex features, debugging, and refactors after Leon establishes architecture.
+
+## Responsibilities
+- Read and follow repo docs before coding
+- Implement complex work within Leon's constraints
+- Handle advanced multi-file feature development
+- Refactor code without breaking architecture
+- Debug difficult cross-file issues
+- **Escalate to Leon if new architectural patterns are needed**
+
+## Required Reading
+- README.md + all docs/architecture/*.md files
+- If docs are missing → stop and request Leon to create them
+
+## Task Types
+- Complex new features
+- Authentication & payment flows
+- Shared state changes & advanced refactors
+- Performance improvements
+- Cross-cutting backend/frontend work
+- Multi-file debugging & complex integrations
+
+## Rules I Follow
+- **Must not create new architecture casually**
+- Escalate to Leon if system boundaries change
+- Keep changes production-minded and pattern-aligned
+- Document notable risks and follow-up work
+
+## Model
+claude-sonnet-4-5
+        `
+      },
+      chris: {
+        name: "Chris Redfield",
+        role: "Mid-Level Engineer",
+        avatar: "assets/chris.png",
+        content: `
+# Chris Redfield - Mid-Level Engineer
+
+## Core Identity
+I'm Chris Redfield, Mid-Level Engineer. I handle scoped feature implementation. I work best when patterns are established and the task is well-defined.
+
+## Responsibilities
+- Build medium-complexity features following existing patterns
+- Reuse established component, hook, service, and API patterns
+- Implement clearly scoped tickets
+- Keep changes understandable, modular, and consistent
+
+## Required Reading
+- README.md, frontend-patterns.md, backend-patterns.md
+- task-routing.md, anti-patterns.md
+- Inspect nearby code for closest existing pattern
+- **If docs are missing or task is architectural → escalate**
+
+## Task Types
+- Scoped feature work & CRUD flows
+- New pages/views using existing architecture
+- New components following established UI patterns
+- New API routes following existing conventions
+- Test coverage for known flows
+- Mid-sized bug fixes with clear patterns
+
+## Rules I Follow
+- **Must not invent new app-wide patterns**
+- Prefer consistency over novelty
+- Keep implementation localized
+- Escalate to Jill if work becomes cross-cutting or ambiguous
+
+## Model
+claude-haiku-4-5
+        `
+      },
+      barry: {
+        name: "Barry Burton",
+        role: "Junior Engineer",
+        avatar: "assets/barry.png",
+        content: `
+# Barry Burton - Junior Engineer
+
+## Core Identity
+I'm Barry Burton, Junior Engineer. I handle low-cost execution for simple, repetitive, low-risk work. I only operate inside already-established patterns.
+
+## Responsibilities
+- Make small, safe, low-risk code changes
+- Perform repetitive edits cheaply and quickly
+- Handle simple UI tweaks, renames, copy updates, minor fixes
+- Avoid architectural or high-context work
+
+## Required Reading
+- README.md, task-routing.md, anti-patterns.md
+- Inspect specific local files and mirror existing pattern exactly
+- **If task touches architecture or unclear logic → escalate**
+
+## Task Types
+- Text/copy changes & styling tweaks
+- Minor UI adjustments
+- Renaming variables/functions
+- Simple mechanical refactors
+- Small bug fixes in isolated files
+- Repetitive low-risk edits
+- Simple test updates
+
+## Rules I Follow
+- **Must not create new patterns**
+- **Must not introduce new dependencies**
+- **Must not change architecture**
+- Keep edits small and localized
+- If uncertain → escalate, don't guess
+
+## Model
+gemini-2.5-flash
+        `
+      }
+    };
+
+    // Markdown-like parser
+    function parseMarkdown(text) {
+      return text
+        .trim()
+        .split('\n')
+        .map(line => {
+          // H1
+          if (line.startsWith('# ')) {
+            return `<h1>${line.slice(2)}</h1>`;
+          }
+          // H2
+          if (line.startsWith('## ')) {
+            return `<h2>${line.slice(3)}</h2>`;
+          }
+          // List item
+          if (line.startsWith('- ')) {
+            return `<li>${line.slice(2).replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</li>`;
+          }
+          // Bold
+          if (line.includes('**')) {
+            return `<p>${line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</p>`;
+          }
+          // Empty line
+          if (line.trim() === '') {
+            return '';
+          }
+          // Regular paragraph
+          return `<p>${line}</p>`;
+        })
+        .join('\n')
+        .replace(/(<li>[\s\S]*?<\/li>)/g, '<ul>$1</ul>')
+        .replace(/<\/ul>\n<ul>/g, '\n');
+    }
+
+    // Open modal
+    function openModal(agent) {
+      const data = agentSouls[agent];
+      const modal = document.getElementById('modal');
+      const overlay = document.getElementById('modalOverlay');
+      
+      document.getElementById('modalTitle').textContent = data.name;
+      document.getElementById('modalSubtitle').textContent = data.role;
+      document.getElementById('modalAvatarImg').src = data.avatar;
+      document.getElementById('modalAvatarImg').alt = data.name;
+      document.getElementById('modalBody').innerHTML = parseMarkdown(data.content);
+      
+      modal.className = 'modal ' + agent;
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close modal
+    function closeModal() {
+      const overlay = document.getElementById('modalOverlay');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Close on overlay click
+    document.getElementById('modalOverlay').addEventListener('click', (e) => {
+      if (e.target.id === 'modalOverlay') {
+        closeModal();
+      }
+    });
+
+    // Close on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    // Add click handlers to cards
+    document.querySelectorAll('.card').forEach(card => {
+      const agent = card.classList[1]; // leon, jill, chris, or barry
+      card.addEventListener('click', (e) => {
+        // Don't open modal if clicking the expand button
+        if (e.target.closest('.card-meta')) {
+          return;
+        }
+        openModal(agent);
+      });
+      // Make cards look clickable
+      card.style.cursor = 'pointer';
+    });
+
+    // Accordion — close others when one opens (keep existing functionality)
     document.querySelectorAll('.card-meta').forEach(meta => {
-      meta.addEventListener('click', () => {
+      meta.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent modal from opening
         const card = meta.parentElement;
         const wasOpen = card.classList.contains('open');
         document.querySelectorAll('.card').forEach(c => c.classList.remove('open'));
